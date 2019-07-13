@@ -47,10 +47,10 @@ public class Movies_Play extends AppCompatActivity {
         object = (movie) getIntent().getSerializableExtra("object");
 
         name.setText(object.getName());
-        //year.setText(object.getYear());
+        year.setText(String.valueOf(object.getYear()));
         genre.setText(object.getGenre());
         desc.setText(object.getDescription());
-        //rating.setRating(object.getRating());
+        rating.setRating(object.getRating());
 
         JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.videoplayer);
         jcVideoPlayerStandard.setUp(object.getLink()

@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -38,10 +39,10 @@ public class Movies_Fregment extends Fragment {
     }
 
     private View view;
-    private RecyclerView newly;
-    private LinearLayoutManager layoutManager;
+    private RecyclerView newly,topp,bollywoode,hollywoode;
+    private LinearLayoutManager layoutManager,layoutManager2,layoutManager3,layoutManager4;
     private Adapter adapter;
-    private List<movie> list;
+    private List<movie> list,list2,list3,list4;
     String url ="http://ec2-13-232-16-250.ap-south-1.compute.amazonaws.com:3000/getMovies";
 
 
@@ -51,40 +52,116 @@ public class Movies_Fregment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_movies__fregment, container, false);
         list = new ArrayList<>();
+        list2 = new ArrayList<>();
+        list3 = new ArrayList<>();
+        list4 = new ArrayList<>();
+
         newly = view.findViewById(R.id.newly);
+        topp = view.findViewById(R.id.top);
+        bollywoode = view.findViewById(R.id.bollywood);
+        hollywoode = view.findViewById(R.id.hollywood);
+
         layoutManager = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManager2 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManager3 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManager4 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
+
         newly.setLayoutManager(layoutManager);
-        //list.add(new movie("Dark","English","Time machine wali movie","https://cdn-images-1.medium.com/max/1200/1*l0TB3UG7S8rSw3d5_yiVpw.png","dughbd",5));
-        //list.add(new movie("Dark","English","Time machine wali movie","https://cdn-images-1.medium.com/max/1200/1*l0TB3UG7S8rSw3d5_yiVpw.png","dughbd",5));
-        //list.add(new movie("Dark","English","Time machine wali movie","https://cdn-images-1.medium.com/max/1200/1*l0TB3UG7S8rSw3d5_yiVpw.png","dughbd",5));
-        list.add(new movie("Dark","English","Time machine wali movie","https://cdn-images-1.medium.com/max/1200/1*l0TB3UG7S8rSw3d5_yiVpw.png","dughbd","Advebture",8,8));
+        topp.setLayoutManager(layoutManager2);
+        bollywoode.setLayoutManager(layoutManager3);
+        hollywoode.setLayoutManager(layoutManager4);
+
+
 
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
 
-        StringRequest strRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest strRequest = new StringRequest(Request.Method.POST,url,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
-
                         try {
-                            JSONArray jsonarray = new JSONArray(response);
-                            for (int i = 0; i < jsonarray.length(); i++) {
-                                JSONObject jsonobject = jsonarray.getJSONObject(i);
-                                //String name = jsonobject.getString("Name");
-                                //String url = jsonobject.getString("Image");
-                                //Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
-                                //list.add(new movie(name,jsonobject.getString("Language"),jsonobject.getString("Description"),url,jsonobject.getString("Link"),jsonobject.getInt("Rating")));
-                                movie data = new Gson().fromJson(String.valueOf(jsonobject), movie.class);
-                                list.add(data);
-                                adapter = new Adapter(list);
-                                newly.setAdapter(adapter);
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray newlya = null;
+                            JSONArray top = null;
+                            JSONArray bollywood = null;
+                            JSONArray hollywood = null;
+                            try {
+                                newlya = jsonObject.getJSONArray("new");
+                                for (int i = 0; i < newlya.length(); i++) {
+                                    JSONObject jsonobject = newlya.getJSONObject(i);
+                                    //String name = jsonobject.getString("Name");
+                                    //String url = jsonobject.getString("Image");
+                                    //Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
+                                    //list.add(new movie(name,jsonobject.getString("Language"),jsonobject.getString("Description"),url,jsonobject.getString("Link"),jsonobject.getInt("Rating")));
+                                    movie data = new Gson().fromJson(String.valueOf(jsonobject), movie.class);
+                                    list.add(data);
+                                    adapter = new Adapter(list);
+                                    newly.setAdapter(adapter);
+                                }
+                                top = jsonObject.getJSONArray("top");
+                                for (int i = 0; i < top.length(); i++) {
+                                    JSONObject jsonobject = top.getJSONObject(i);
+                                    //String name = jsonobject.getString("Name");
+                                    //String url = jsonobject.getString("Image");
+                                    //Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
+                                    //list.add(new movie(name,jsonobject.getString("Language"),jsonobject.getString("Description"),url,jsonobject.getString("Link"),jsonobject.getInt("Rating")));
+                                    movie data = new Gson().fromJson(String.valueOf(jsonobject), movie.class);
+                                    list2.add(data);
+                                    adapter = new Adapter(list2);
+                                    topp.setAdapter(adapter);
+                                }
+                                bollywood = jsonObject.getJSONArray("bolywood");
+                                for (int i = 0; i < bollywood.length(); i++) {
+                                    JSONObject jsonobject = bollywood.getJSONObject(i);
+                                    //String name = jsonobject.getString("Name");
+                                    //String url = jsonobject.getString("Image");
+                                    //Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
+                                    //list.add(new movie(name,jsonobject.getString("Language"),jsonobject.getString("Description"),url,jsonobject.getString("Link"),jsonobject.getInt("Rating")));
+                                    movie data = new Gson().fromJson(String.valueOf(jsonobject), movie.class);
+                                    list3.add(data);
+                                    adapter = new Adapter(list3);
+                                    bollywoode.setAdapter(adapter);
+                                }
+                                hollywood = jsonObject.getJSONArray("hollywood");
+                                for (int i = 0; i < bollywood.length(); i++) {
+                                    JSONObject jsonobject = bollywood.getJSONObject(i);
+                                    //String name = jsonobject.getString("Name");
+                                    //String url = jsonobject.getString("Image");
+                                    //Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
+                                    //list.add(new movie(name,jsonobject.getString("Language"),jsonobject.getString("Description"),url,jsonobject.getString("Link"),jsonobject.getInt("Rating")));
+                                    movie data = new Gson().fromJson(String.valueOf(jsonobject), movie.class);
+                                    list4.add(data);
+                                    adapter = new Adapter(list4);
+                                    hollywoode.setAdapter(adapter);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
+
+                        //try {
+                        //    JSONArray jsonarray = new JSONArray(response);
+                        //    for (int i = 0; i < jsonarray.length(); i++) {
+                        //        JSONObject jsonobject = jsonarray.getJSONObject(i);
+                        //        //String name = jsonobject.getString("Name");
+                        //        //String url = jsonobject.getString("Image");
+                        //        //Toast.makeText(view.getContext(),name,Toast.LENGTH_LONG).show();
+                        //        //list.add(new movie(name,jsonobject.getString("Language"),jsonobject.getString("Description"),url,jsonobject.getString("Link"),jsonobject.getInt("Rating")));
+                        //        movie data = new Gson().fromJson(String.valueOf(jsonobject), movie.class);
+                        //        list.add(data);
+                        //        adapter = new Adapter(list);
+                        //        newly.setAdapter(adapter);
+                        //    }
+                        //} catch (JSONException e) {
+                        //    e.printStackTrace();
+                        //}
+//
 
                     }
                 },

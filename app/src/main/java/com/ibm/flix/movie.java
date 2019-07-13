@@ -8,7 +8,17 @@ public class movie implements Serializable {
 
 
     private String Name,Language,Description,Image,Link,Genre;
-    private int Rating,Year;
+    private int Year;
+
+    public float getRating() {
+        return Rating;
+    }
+
+    public void setRating(float rating) {
+        Rating = rating;
+    }
+
+    private float Rating;
 
     public String getGenre() {
         return Genre;
@@ -18,7 +28,7 @@ public class movie implements Serializable {
         Genre = genre;
     }
 
-    public movie(String name, String language, String description, String image, String link, String genre, int rating, int year) {
+    public movie(String name, String language, String description, String image, String link, String genre, float rating, int year) {
         Name = name;
         Language = language;
         Description = description;
@@ -77,11 +87,6 @@ public class movie implements Serializable {
         Link = link;
     }
 
-    public int getRating() {
-        return Rating;
-    }
 
-    public void setRating(int rating) {
-        Rating = rating;
-    }
+
 }
