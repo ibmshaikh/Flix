@@ -66,6 +66,8 @@ public class Movies_Fregment extends Fragment {
         layoutManager3 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
         layoutManager4 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
 
+
+        
         newly.setLayoutManager(layoutManager);
         topp.setLayoutManager(layoutManager2);
         bollywoode.setLayoutManager(layoutManager3);
