@@ -3,18 +3,26 @@ package com.ibm.flix;
         import android.support.annotation.NonNull;
         import android.support.design.widget.BottomNavigationView;
         import android.support.v4.app.FragmentManager;
+        import android.support.v4.view.ViewPager;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ViewPager viewPager;
+    private PagerviewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Movies_Fregment movies_fregment = new Movies_Fregment();
+        viewPager = findViewById(R.id.viewpager);
+        adapter = new PagerviewAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+
+       /* Movies_Fregment movies_fregment = new Movies_Fregment();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.content,movies_fregment,movies_fregment.getTag()).commit();
 
@@ -46,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             }
-        });
+        });*/
 
 
     }

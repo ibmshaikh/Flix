@@ -1,7 +1,10 @@
 package com.ibm.flix;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -43,8 +56,9 @@ public class Movies_Fregment extends Fragment {
     private LinearLayoutManager layoutManager,layoutManager2,layoutManager3,layoutManager4;
     private Adapter adapter;
     private List<movie> list,list2,list3,list4;
-    String url ="http://ec2-13-232-16-250.ap-south-1.compute.amazonaws.com:3000/getMovies";
-
+    //String url ="http://ec2-13-232-16-250.ap-south-1.compute.amazonaws.com:3000/getMovies";
+    private DatabaseReference mref;
+    private ProgressDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,26 +70,184 @@ public class Movies_Fregment extends Fragment {
         list3 = new ArrayList<>();
         list4 = new ArrayList<>();
 
+        dialog = new ProgressDialog(view.getContext());
+        dialog.setMessage("Loading...");
+        dialog.setCanceledOnTouchOutside(false);
+        view.setVisibility(View.GONE);
+        dialog.show();
+
         newly = view.findViewById(R.id.newly);
         topp = view.findViewById(R.id.top);
         bollywoode = view.findViewById(R.id.bollywood);
         hollywoode = view.findViewById(R.id.hollywood);
 
-        layoutManager = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManager = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,true);
         layoutManager2 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
         layoutManager3 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
         layoutManager4 = new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,false);
 
 
-        
+        layoutManager.setStackFromEnd(true);
+
         newly.setLayoutManager(layoutManager);
         topp.setLayoutManager(layoutManager2);
         bollywoode.setLayoutManager(layoutManager3);
         hollywoode.setLayoutManager(layoutManager4);
 
 
+        mref = FirebaseDatabase.getInstance().getReference();
 
-        RequestQueue queue = Volley.newRequestQueue(view.getContext());
+        final movie object = new movie();
+        object.setName("Bahubali");
+        object.setDescription("Good one");
+        object.setGenre("Action");
+        object.setImage("https://4.bp.blogspot.com/-Fxo_qnGJBj0/WRoDPNdlEII/AAAAAAAABF0/1mSHmv5gleQaCsHKEDgTB3DbNghjCXvZACLcB/s1600/logo_firebase_1920px_clr.png");
+        object.setHollywood(false);
+        object.setYear(2019);
+        object.setRating(5);
+        object.setLink("https://ibmbucketnew.s3.ap-south-1.amazonaws.com/1.1+HMI(human_machine_interaction)_IN_HINDI.mp4");
+        object.setLanguage("English");
+
+        //mref.child("Movies").child("All").push().setValue(object).addOnSuccessListener(new OnSuccessListener<Void>() {
+        //    @Override
+        //    public void onSuccess(Void aVoid) {
+        //        if (object.isHollywood()){
+        //            mref.child("Movies").child("Hollywood").push().setValue(object);
+        //        }else {
+        //            mref.child("Movies").child("Bollywood").push().setValue(object);
+//
+        //        }
+        //    }
+        //});
+//
+
+        mref.child("Movies").child("All").limitToLast(15).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                movie message = dataSnapshot.getValue(movie.class);
+                list.add(message);
+                adapter = new Adapter(list);
+                newly.setAdapter(adapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //TODO change quary to top rated
+        mref.child("Movies").child("Bollywood").limitToLast(15).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                movie message = dataSnapshot.getValue(movie.class);
+                list2.add(message);
+                adapter = new Adapter(list2);
+                topp.setAdapter(adapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        mref.child("Movies").child("Bollywood").limitToLast(15).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                movie message = dataSnapshot.getValue(movie.class);
+                list3.add(message);
+                adapter = new Adapter(list3);
+                bollywoode.setAdapter(adapter);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        mref.child("Movies").child("Hollywood").limitToLast(15).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                movie message = dataSnapshot.getValue(movie.class);
+                list4.add(message);
+                adapter = new Adapter(list4);
+                hollywoode.setAdapter(adapter);
+                dialog.dismiss();
+                view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+       /* RequestQueue queue = Volley.newRequestQueue(view.getContext());
 
         StringRequest strRequest = new StringRequest(Request.Method.POST,url,
                 new Response.Listener<String>()
@@ -179,7 +351,7 @@ public class Movies_Fregment extends Fragment {
 
         };
 
-        queue.add(strRequest);
+        queue.add(strRequest);*/
 
         return view;
     }

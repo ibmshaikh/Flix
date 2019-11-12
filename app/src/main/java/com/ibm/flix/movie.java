@@ -3,12 +3,27 @@ package com.ibm.flix;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class movie implements Serializable {
+
+    public movie() {
+    }
 
 
     private String Name,Language,Description,Image,Link,Genre;
     private int Year;
+    private boolean isHollywood;
+
+    public boolean isHollywood() {
+        return isHollywood;
+    }
+
+    public void setHollywood(boolean hollywood) {
+        isHollywood = hollywood;
+    }
+
+
 
     public float getRating() {
         return Rating;
@@ -28,16 +43,6 @@ public class movie implements Serializable {
         Genre = genre;
     }
 
-    public movie(String name, String language, String description, String image, String link, String genre, float rating, int year) {
-        Name = name;
-        Language = language;
-        Description = description;
-        Image = image;
-        Link = link;
-        Genre = genre;
-        Rating = rating;
-        Year = year;
-    }
 
     public int getYear() {
         return Year;

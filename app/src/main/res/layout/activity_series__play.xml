@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+        android:id="@+id/videoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Season and Episode Number"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/episodename"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="Episode Number"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"                    />
+
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="Name"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    />
+
+                <RatingBar
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:layout_marginTop="8dp"
+                    android:isIndicator="true" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2018"
+                        />
+
+                    <TextView
+                        android:id="@+id/genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adventure, Horror, Action"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Download"
+                android:padding="15dp"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:padding="15dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_file_download_black_24dp"
+                android:layout_alignParentEnd="true"
+                />
+
+        </RelativeLayout>
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="This worked for me: RatingBar should be inside LinearLayout other than having layout width set to wrap content for RatingBar."
+                android:padding="15dp"
+                android:textColor="@color/black"
+                />
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+</LinearLayout>
