@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Content Upload</string>
+
+    <string-array name="genre">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Fantasy</item>
+        <item>Historical</item>
+        <item>Horror</item>
+        <item>Mystery</item>
+        <item>Political</item>
+        <item>Romance</item>
+        <item>Sci-Fi</item>
+        <item>Thriller</item>
+        <item>Animation</item>
+
+    </string-array>
+
+    <string-array name="languge">
+        <item>Hindi</item>
+        <item>English</item>
+
+    </string-array>
+
+    <string-array name="hb">
+        <item>Hollywood</item>
+        <item>Bollywood</item>
+
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
